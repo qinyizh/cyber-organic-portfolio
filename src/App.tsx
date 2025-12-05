@@ -1,6 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Icosahedron, MeshDistortMaterial } from '@react-three/drei'
-// 修复 1：使用 type 关键字导入类型，满足 verbatimModuleSyntax 规则
 import { useRef, useState, useEffect, type MutableRefObject } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
@@ -129,7 +128,6 @@ const Model = ({ beatSignalRef }: { beatSignalRef: MutableRefObject<boolean> }) 
   })
 
   useGSAP(() => {
-    // 修复 2：增加 !wireframeRef.current 检查，防止 TS 报错 "possibly null"
     if (!groupRef.current || !wireframeRef.current) return
 
     const tl = gsap.timeline({
@@ -250,7 +248,8 @@ export default function App() {
           
           <Model beatSignalRef={beatSignalRef} />
 
-          <EffectComposer disableNormalPass multisampling={0}>
+          {/* 🛠️ 修复：将 disableNormalPass 替换为 enableNormalPass={false} */}
+          <EffectComposer enableNormalPass={false} multisampling={0}>
             <Bloom 
               luminanceThreshold={0.9} 
               mipmapBlur 
