@@ -1,0 +1,53 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark; /* 2025年流行深色模式 */
+  background-color: #000000;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* 防止横向滚动 */
+}
+
+/* 关键布局：Canvas 固定在背后 */
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* 在最底层 */
+  pointer-events: none; /* 让鼠标事件穿透 Canvas 到达文字层 */
+}
+
+/* 关键布局：HTML 内容在前面滚动 */
+#content-container {
+  position: relative;
+  z-index: 1; /* 在 Canvas 之上 */
+  width: 100%;
+}
+
+/* 每一个叙事段落 */
+.section {
+  height: 100vh; /* 每一屏占满高度 */
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+  font-size: 2rem;
+  font-weight: bold;
+  h1, p {
+    /* 给所有文字加一层半透明黑色的阴影，保证在任何亮度背景下都清晰可见 */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    /* 稍微增加层级，确保文字永远浮在辉光之上 */
+    position: relative;
+    z-index: 10;
+  }
+}
+
+.section.right { justify-content: flex-end; }
+.section.left { justify-content: flex-start; }
+.section.center { justify-content: center; }
